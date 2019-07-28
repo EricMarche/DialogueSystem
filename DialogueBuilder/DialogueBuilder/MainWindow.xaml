@@ -1,0 +1,101 @@
+﻿<Window x:Class="DialogueBuilder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DialogueBuilder"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="508.4" Width="800">
+    <Grid Margin="0,10,-0.4,-2.8">
+        <Grid.RowDefinitions >
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="67*"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="70*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="198*"/>
+            <ColumnDefinition Width="198*"/>
+            <ColumnDefinition Width="276*"/>
+            <ColumnDefinition Width="176*"/>
+        </Grid.ColumnDefinitions>
+        <CheckBox Name="CheckBox_Option1" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="2"
+                  VerticalAlignment="Center" Height="16" Width="15" Margin="0.6,37.4,0,41" RenderTransformOrigin="0.76,-0.825"/>
+        <CheckBox Name="CheckBox_Option2" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3"
+                  VerticalAlignment="Center" Height="16" Width="15" Margin="0.6,9.6,0,15.2"/>
+        <CheckBox Name="CheckBox_Option3" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="4"
+                  VerticalAlignment="Center" Height="16" Width="15" Margin="0.6,27.8,0,26.6"/>
+        <TextBox IsEnabled="{Binding ElementName=CheckBox_Option1, Path=IsChecked}" TextWrapping="Wrap" AcceptsReturn="True" 
+                 Name="Option1_Text" Grid.Column="2" Grid.Row="2" Margin="29.6,9.2,4.8,8.4"/>
+        <TextBox IsEnabled="{Binding ElementName=CheckBox_Option2, Path=IsChecked}" TextWrapping="Wrap" AcceptsReturn="True" 
+                 Name="Option2_Text" Grid.Column="2" Grid.Row="3" Margin="29.6,11.6,4.8,10.2" />
+        <TextBox IsEnabled="{Binding ElementName=CheckBox_Option3, Path=IsChecked}" TextWrapping="Wrap" AcceptsReturn="True"
+                 Name="Option3_Text" Grid.Column="2" Grid.Row="4" Margin="29.6,9.8,4.8,10.6"/>
+        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Name="DialogueText" Grid.Column="2" Margin="0.6,33,4.8,13.8" Grid.RowSpan="2"/>
+        <TreeView Name="NodeTree" Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="5,4.6,5.4,5.6" Grid.Row="1" SelectedItemChanged="NodeTree_SelectedItemChanged">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type local:MenuItem}" ItemsSource="{Binding Items}">
+                    <TextBlock Text="{Binding Title}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"
+                   Text="Options" VerticalAlignment="Top" Margin="113.6,53.2,99.8,0" Grid.RowSpan="2" Width="45" Grid.Row="1" RenderTransformOrigin="0.462,-0.514" Height="16"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Center" Margin="113.6,12,91.8,0" TextWrapping="Wrap" Text="Dialogue" VerticalAlignment="Top" Width="53" Height="16"/>
+        <TextBox Name="FileName" HorizontalAlignment="Left" Height="23" Margin="75,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="383" Grid.ColumnSpan="3"/>
+        <Label Content="File name :" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Height="26" Width="67"/>
+        <Button Click="Load_DialogueFile_Click" Name="Load_DialogueFile"
+                Content="Load" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"
+                Width="65" Height="23"/>
+        <TextBox Name="FilePath" IsEnabled="False"
+                 HorizontalAlignment="Left" Height="23" Margin="75,41,0,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Width="383" Grid.ColumnSpan="3"/>
+        <Button Name="Save_DialogueNode"  Content="Save" Grid.Column="2" HorizontalAlignment="Center"
+                Grid.Row="5" VerticalAlignment="Center" Width="75"
+                Click="Save_DialogueNode_Click" Height="21" Margin="91.6,21.6,91.8,23"/>
+        <Button Name="Add_DialogueNode" Content="Add New Node" HorizontalAlignment="Left" Margin="182,10.4,0,0" 
+                Grid.Row="5" VerticalAlignment="Top" Width="103" Grid.ColumnSpan="2"
+                Click="Add_DialogueNode_Click" IsEnabled="False" Height="19"/>
+        <Button Name="Create_New_Tree" Content="Create New Tree" HorizontalAlignment="Left" Margin="182,40.4,0,0" 
+                Grid.Row="5" VerticalAlignment="Top" Width="103" Grid.ColumnSpan="2"
+                Click="Create_New_Tree_Click" Height="19" />
+        <CheckBox Content="Display once" Name="DisplayOnce1" IsEnabled="{Binding ElementName=CheckBox_Option1, Path=IsChecked}"
+                  Grid.Column="3" HorizontalAlignment="Left" Margin="10.2,15.2,0,0" Grid.Row="2" VerticalAlignment="Top" Height="15" Width="103"/>
+        <TextBox Name="MinCharisma1" PreviewTextInput="NumberValidationTextBox" MaxLength="1"
+                 IsEnabled="{Binding ElementName=CheckBox_Option1, Path=IsChecked}"
+                 Grid.Column="3" HorizontalAlignment="Left" Height="18" Margin="10.2,61.4,0,0" Grid.Row="2"
+                 TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="17" RenderTransformOrigin="0.575,2.009"
+                 />
+        <CheckBox Content="Return to 'Parent node'"  Name="returnParentNode1" IsEnabled="{Binding ElementName=CheckBox_Option1, Path=IsChecked}"
+                  Grid.Column="3" HorizontalAlignment="Left" Margin="10.2,38.4,0,0" Grid.Row="2" VerticalAlignment="Top" Height="15" Width="145"/>
+        <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="32.2,62.4,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Min Charisma" VerticalAlignment="Top" RenderTransformOrigin="-0.16,0.414"/>
+        <CheckBox Content="Display once" x:Name="DisplayOnce2" IsEnabled="{Binding ElementName=CheckBox_Option2, Path=IsChecked}"
+            Grid.Column="3" HorizontalAlignment="Left" Margin="10.2,12,0,0" Grid.Row="3" VerticalAlignment="Top" Height="15" Width="103"/>
+        <TextBox Name="MinCharisma2" PreviewTextInput="NumberValidationTextBox" MaxLength="1"
+                 IsEnabled="{Binding ElementName=CheckBox_Option2, Path=IsChecked}"
+                 Grid.Column="3" HorizontalAlignment="Left" Height="18" Margin="10.2,58,0,0" Grid.Row="3"
+                 TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="17" RenderTransformOrigin="0.575,2.009"
+                 />
+        <CheckBox Content="Return to 'Parent node'" Name="returnParentNode2" IsEnabled="{Binding ElementName=CheckBox_Option2, Path=IsChecked}"
+            Grid.Column="3" HorizontalAlignment="Left" Margin="10.2,35,0,0" Grid.Row="3" VerticalAlignment="Top" Height="15" Width="145"/>
+        <TextBlock Grid.Column="3" HorizontalAlignment="Right" Margin="0,59,59.6,0" Grid.Row="3" TextWrapping="Wrap" Text="Min Charisma" VerticalAlignment="Top"/>
+        <CheckBox Content="Display once" x:Name="DisplayOnce3" IsEnabled="{Binding ElementName=CheckBox_Option3, Path=IsChecked}"
+            Grid.Column="3" HorizontalAlignment="Left" Margin="10.2,10.6,0,0" Grid.Row="4" VerticalAlignment="Top" Height="15" Width="103"/>
+        <TextBox Name="MinCharisma3" PreviewTextInput="NumberValidationTextBox" MaxLength="1"
+                 IsEnabled="{Binding ElementName=CheckBox_Option3, Path=IsChecked}"
+            Grid.Column="3" HorizontalAlignment="Left" Height="18" Margin="10.2,56.6,0,0" Grid.Row="4"
+            TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="17" RenderTransformOrigin="0.575,2.009"
+                 />
+        <CheckBox Content="Return to 'Parent node'"  x:Name="returnParentNode3"
+                  IsEnabled="{Binding ElementName=CheckBox_Option3, Path=IsChecked}"
+                  Grid.Column="3" HorizontalAlignment="Left" Margin="10.2,33.6,0,0" Grid.Row="4" VerticalAlignment="Top" Height="15" Width="145"/>
+        <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="32.2,56.6,0,0" Grid.Row="4" TextWrapping="Wrap" Text="Min Charisma" VerticalAlignment="Top"/>
+    </Grid>
+</Window>

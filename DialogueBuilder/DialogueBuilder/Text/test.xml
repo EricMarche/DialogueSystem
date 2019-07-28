@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dialogue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Nodes>
+    <DialogueNode>
+      <NodeID>0</NodeID>
+      <Text>test</Text>
+      <Options>
+        <DialogueOption>
+          <Text>1</Text>
+          <DestinationNodeID>-1</DestinationNodeID>
+        </DialogueOption>
+        <DialogueOption>
+          <Text>2</Text>
+          <DestinationNodeID>-1</DestinationNodeID>
+        </DialogueOption>
+      </Options>
+    </DialogueNode>
+  </Nodes>
+</Dialogue>
